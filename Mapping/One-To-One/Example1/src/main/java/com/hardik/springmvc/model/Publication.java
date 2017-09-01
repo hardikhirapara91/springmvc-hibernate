@@ -1,4 +1,4 @@
-package com.hardik.springmvc.bean;
+package com.hardik.springmvc.model;
 
 import java.io.Serializable;
 

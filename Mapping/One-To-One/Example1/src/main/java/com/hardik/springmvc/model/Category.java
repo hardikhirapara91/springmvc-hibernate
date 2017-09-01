@@ -1,4 +1,4 @@
-package com.hardik.springmvc.bean;
+package com.hardik.springmvc.model;
 
 import java.io.Serializable;
 
@@ -8,6 +8,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
+import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
 @Table(name = "CATEGORY")
@@ -22,7 +24,7 @@ public class Category implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "categoryId")
 	private Integer categoryId;
-
+	@NotEmpty
 	@Column(name = "categoryName", nullable = false)
 	private String categoryName;
 

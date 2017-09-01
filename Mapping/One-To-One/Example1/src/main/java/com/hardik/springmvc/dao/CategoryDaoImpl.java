@@ -7,8 +7,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
-import com.hardik.springmvc.bean.Category;
 import com.hardik.springmvc.controller.CategoryController;
+import com.hardik.springmvc.model.Category;
 
 /**
  * Category DAO Implementation

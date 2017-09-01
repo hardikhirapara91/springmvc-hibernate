@@ -2,7 +2,7 @@ package com.hardik.springmvc.service;
 
 import java.util.List;
 
-import com.hardik.springmvc.bean.Publication;
+import com.hardik.springmvc.model.Publication;
 
 /**
  * Publication Service
