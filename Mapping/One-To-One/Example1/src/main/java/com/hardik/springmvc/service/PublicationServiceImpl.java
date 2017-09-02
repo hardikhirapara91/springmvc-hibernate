@@ -52,13 +52,12 @@ public class PublicationServiceImpl implements PublicationService {
 	 */
 	@Override
 	@Transactional
-	public Publication getById(int pubId) {
+	public Publication getById(Integer id) {
 		try {
-			return publicationDao.getPublication(pubId);
+			return publicationDao.getPublication(id);
 		} catch (Exception ex) {
 			logger.error("Exception|PublicationService.getById()| getting by publication id: ", ex);
 		}
-
 		return new Publication();
 	}
 
@@ -90,9 +89,9 @@ public class PublicationServiceImpl implements PublicationService {
 	 * Delete Publication
 	 */
 	@Override
-	public void delete(int pubId) {
+	public void delete(Publication publication) {
 		try {
-			publicationDao.deletePublication(pubId);
+			publicationDao.deletePublication(publication);
 		} catch (Exception ex) {
 			logger.error("Exception|PublicationService.delete()| deleting publication: ", ex);
 		}

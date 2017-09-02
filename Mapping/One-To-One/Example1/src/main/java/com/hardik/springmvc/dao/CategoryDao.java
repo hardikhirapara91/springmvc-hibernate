@@ -14,12 +14,12 @@ public interface CategoryDao {
 
 	public List<Category> getCategories();
 
-	public Category getCategory(int categoryId);
+	public Category getCategory(Integer id);
 
 	public void addCategory(Category category);
 
 	public void updateCategory(Category category);
 
-	public void deleteCategory(int categoryId);
+	public void deleteCategory(Category category);
 
 }

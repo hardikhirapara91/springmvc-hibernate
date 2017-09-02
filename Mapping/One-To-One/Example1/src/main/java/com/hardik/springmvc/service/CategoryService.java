@@ -14,11 +14,11 @@ public interface CategoryService {
 
 	public List<Category> getAll();
 
-	public Category getById(Integer categoryId);
+	public Category getById(Integer id);
 
 	public void save(Category category);
 
 	public void update(Category category);
 
-	public void delete(Integer categoryId);
+	public void delete(Category category);
 }

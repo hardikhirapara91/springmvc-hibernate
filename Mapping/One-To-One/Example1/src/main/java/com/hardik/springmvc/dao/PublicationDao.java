@@ -14,12 +14,12 @@ public interface PublicationDao {
 
 	public List<Publication> getPublications();
 
-	public Publication getPublication(int pubId);
+	public Publication getPublication(Integer id);
 
 	public void addPublication(Publication publication);
 
 	public void updatePublication(Publication publication);
 
-	public void deletePublication(int pubId);
+	public void deletePublication(Publication publication);
 
 }

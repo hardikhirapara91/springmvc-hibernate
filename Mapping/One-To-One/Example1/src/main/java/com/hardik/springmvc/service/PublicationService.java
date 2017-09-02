@@ -16,10 +16,10 @@ public interface PublicationService {
 
 	public List<Publication> getAll();
 
-	public Publication getById(int pubId);
+	public Publication getById(Integer id);
 
 	public void update(Publication publication);
 
-	public void delete(int pubId);
+	public void delete(Publication publication);
 
 }

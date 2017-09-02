@@ -87,9 +87,9 @@ public class CategoryServiceImpl implements CategoryService {
 	 * Delete Category
 	 */
 	@Override
-	public void delete(Integer categoryId) {
+	public void delete(Category category) {
 		try {
-			categoryDao.deleteCategory(categoryId);
+			categoryDao.deleteCategory(category);
 		} catch (Exception ex) {
 			logger.error("Exception|CategoryService.delete()| while deliting category: ", ex);
 		}

@@ -7,7 +7,11 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
 @Table(name = "PUBLICATION")
@@ -20,14 +24,19 @@ public class Publication implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "pubId")
 	private Integer pubId;
 
+	@NotEmpty
 	@Column(name = "content", nullable = false)
 	private String content;
 
+	@NotEmpty
 	@Column(name = "Title", nullable = false)
 	private String title;
+
+	@OneToOne
+	@JoinColumn(name = "categoryId")
+	private Category category;
 
 	public Integer getPubId() {
 		return pubId;
@@ -51,6 +60,14 @@ public class Publication implements Serializable {
 
 	public void setTitle(String title) {
 		this.title = title;
+	}
+
+	public Category getCategory() {
+		return category;
+	}
+
+	public void setCategory(Category category) {
+		this.category = category;
 	}
 
 }

@@ -2,6 +2,7 @@ package com.hardik.springmvc.dao;
 
 import java.util.List;
 
+import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
@@ -26,15 +27,19 @@ public class PublicationDaoImpl extends AbstractDao implements PublicationDao {
 	@Override
 	@SuppressWarnings("unchecked")
 	public List<Publication> getPublications() {
-		return getSession().createCriteria(Publication.class).list();
+		List<Publication> publications = getSession().createCriteria(Publication.class).list();
+		logger.info(String.format("Getting publications and found %1$s publications", publications.size()));
+		return publications;
 	}
 
 	/**
 	 * GET BY ID
 	 */
 	@Override
-	public Publication getPublication(int pubId) {
-		return (Publication) getSession().load(Publication.class, pubId);
+	public Publication getPublication(Integer id) {
+		logger.info("Getting publication by publication id=" + id);
+		return (Publication) getSession().createCriteria(Publication.class).add(Restrictions.eq("pubId", id))
+				.uniqueResult();
 	}
 
 	/**
@@ -42,6 +47,7 @@ public class PublicationDaoImpl extends AbstractDao implements PublicationDao {
 	 */
 	@Override
 	public void addPublication(Publication publication) {
+		logger.info("Saving publication on database.");
 		persist(publication);
 	}
 
@@ -50,6 +56,7 @@ public class PublicationDaoImpl extends AbstractDao implements PublicationDao {
 	 */
 	@Override
 	public void updatePublication(Publication publication) {
+		logger.info("Updating publication on database.");
 		update(publication);
 	}
 
@@ -57,11 +64,9 @@ public class PublicationDaoImpl extends AbstractDao implements PublicationDao {
 	 * DELETE
 	 */
 	@Override
-	public void deletePublication(int pubId) {
-		Publication publication = getPublication(pubId);
-		if (publication != null) {
-			delete(publication);
-		}
+	public void deletePublication(Publication publication) {
+		logger.info("Deleting publication on database.");
+		delete(publication);
 	}
 
 }

@@ -27,16 +27,19 @@ public class CategoryDaoImpl extends AbstractDao implements CategoryDao {
 	@Override
 	@SuppressWarnings("unchecked")
 	public List<Category> getCategories() {
-		return getSession().createCriteria(Category.class).list();
+		List<Category> categories = getSession().createCriteria(Category.class).list();
+		logger.info(String.format("Getting categories on database and found %1$s categories.", categories.size()));
+		return categories;
 	}
 
 	/**
 	 * GET BY ID
 	 */
 	@Override
-	public Category getCategory(int categoryId) {
-		return (Category) getSession().createCriteria(Category.class)
-				.add(Restrictions.eqOrIsNull("cagegoryId", categoryId)).uniqueResult();
+	public Category getCategory(Integer id) {
+		logger.info("Getting category by categoryId=" + id);
+		return (Category) getSession().createCriteria(Category.class).add(Restrictions.eq("categoryId", id))
+				.uniqueResult();
 	}
 
 	/**
@@ -44,6 +47,7 @@ public class CategoryDaoImpl extends AbstractDao implements CategoryDao {
 	 */
 	@Override
 	public void addCategory(Category category) {
+		logger.info("Saving category on database.");
 		persist(category);
 	}
 
@@ -52,6 +56,7 @@ public class CategoryDaoImpl extends AbstractDao implements CategoryDao {
 	 */
 	@Override
 	public void updateCategory(Category category) {
+		logger.info("Updating category on database.");
 		update(category);
 	}
 
@@ -59,11 +64,9 @@ public class CategoryDaoImpl extends AbstractDao implements CategoryDao {
 	 * DELETE
 	 */
 	@Override
-	public void deleteCategory(int categoryId) {
-		Category category = getCategory(categoryId);
-		if (category != null) {
-			delete(category);
-		}
+	public void deleteCategory(Category category) {
+		logger.info("Deleting category on database.");
+		delete(category);
 	}
 
 }

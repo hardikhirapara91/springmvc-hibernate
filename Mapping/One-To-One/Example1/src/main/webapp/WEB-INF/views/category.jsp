@@ -12,8 +12,8 @@
 	
 	<div>
 		<h2>Create New Category</h2>
-		
-		<form:form action="${pageContext.request.contextPath}/category/add" method="POST" modelAttribute="category">
+		<p style="color:red;">${errorMessage}</p>
+		<form:form action="${pageContext.request.contextPath}/categories/add" method="POST" modelAttribute="category">
 			<table>
 				<tr>
 					<td><form:label path="categoryId">Category ID:</form:label></td>
@@ -22,7 +22,7 @@
 				</tr>
 				<tr>
 					<td><form:label path="categoryName">Category Name:</form:label></td>
-					<td><form:input type="text" path="categoryName"/></td>
+					<td><form:input type="text" path="categoryName" autofocus="autofocus"/></td>
 					<td><form:errors path="categoryName" /></td>
 				</tr>
 				<tr>
@@ -42,13 +42,15 @@
 				<td>${category.categoryId}</td>
 				<td>${category.categoryName}</td>
 				<td>
-					<a href="${pageContext.request.contextPath}/category/${category.categoryId}/update">Update</a>
+					<a href="${pageContext.request.contextPath}/categories/${category.categoryId}/update">Update</a>
 					|
-					<a href="${pageContext.request.contextPath}/category/${category.categoryId}/delete">Delete</a>
+					<a href="${pageContext.request.contextPath}/categories/${category.categoryId}/delete">Delete</a>
 				</td>
 			</tr>
 			</c:forEach>
 		</table>
+		<br>
+		<h2><a href="publications">Adding Publication</a></h2>
 	</div>
 </body>
 </html>

@@ -1,5 +1,7 @@
 package com.hardik.springmvc.controller;
 
+import java.util.List;
+
 import javax.validation.Valid;
 
 import org.slf4j.Logger;
@@ -38,13 +40,17 @@ public class CategoryController {
 	 * @return
 	 */
 	@RequestMapping(method = RequestMethod.GET)
-	public String getCagegory(ModelMap model) {
+	public String showCategoryView(ModelMap model) {
+		logger.info("CategoryController.getCategory() method calling...");
+
 		model.addAttribute("category", new Category());
 		model.addAttribute("categories", categoryService.getAll());
-
-		System.out.println(categoryService.getAll());
-
 		return "category";
+	}
+
+	@RequestMapping(value = "/categories", method = RequestMethod.GET)
+	public List<Category> getCategories(ModelMap model) {
+		return categoryService.getAll();
 	}
 
 	/**
@@ -55,33 +61,73 @@ public class CategoryController {
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value = "/category/add", method = RequestMethod.POST)
+	@RequestMapping(value = "/categories/add", method = RequestMethod.POST)
 	public String saveCategory(@ModelAttribute("category") @Valid Category category, BindingResult result,
 			ModelMap model) {
+		logger.info("CategoryController.saveCategory() method calling...");
 
 		model.addAttribute("categories", categoryService.getAll());
 		if (result.hasErrors()) {
 			return "category";
 		}
 
-		categoryService.save(category);
-		model.addAttribute("category", new Category());
+		if (category.getCategoryId() != null && category.getCategoryId() > 0) {
+			categoryService.update(category);
+		} else {
+			categoryService.save(category);
+		}
 
+		model.addAttribute("category", new Category());
 		return "redirect:/";
 	}
 
 	/**
-	 * Get Category
+	 * Update Category
 	 * 
 	 * @param category
 	 * @param result
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value = "/category/{id}/update", method = RequestMethod.GET)
+	@RequestMapping(value = "/categories/{id}/update", method = RequestMethod.GET)
 	public String updateCategory(@PathVariable("id") Integer id, ModelMap model) {
+		logger.info("CategoryController.updateCategory() method calling...");
 
-		model.addAttribute("category", categoryService.getById(id));
+		Category category = categoryService.getById(id);
+		if (category != null) {
+			model.addAttribute("category", categoryService.getById(id));
+		} else {
+			logger.info("Invalid category id on updating category.");
+			model.addAttribute("category", new Category());
+			model.addAttribute("errorMessage", "Invalid category id.");
+		}
+
+		model.addAttribute("categories", categoryService.getAll());
 		return "category";
+	}
+
+	/**
+	 * Delete Category
+	 * 
+	 * @param category
+	 * @param result
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "/categories/{id}/delete", method = RequestMethod.GET)
+	public String deleteCategory(@PathVariable("id") Integer id, ModelMap model) {
+		logger.debug("CategoryController.deleteCategory() method calling...");
+
+		Category category = categoryService.getById(id);
+		if (category != null) {
+			categoryService.delete(category);
+		} else {
+			logger.error("Invalid category id while deleting category.");
+			model.addAttribute("errorMessage", "Invalid category id.");
+		}
+
+		model.addAttribute("category", new Category());
+		model.addAttribute("categories", categoryService.getAll());
+		return "redirect:/";
 	}
 }
